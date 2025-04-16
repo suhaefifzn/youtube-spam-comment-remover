@@ -1,14 +1,14 @@
 <script setup>
 import { ref, nextTick } from "vue";
-import { dbPromise } from "../../lib/db.js";
+import { addHistory } from "../../service/idb/history-idb.js";
+import { isAccessTokenExpired } from "../../service/api/auth-api.js";
 import {
   fetchCommentsFromVideoById,
   fetchCommentsFromChannelById,
   getDetailVideoById,
   getDetailChannelById,
-  rejectComments,
-  isAccessTokenExpired
-} from "../../service/api.js";
+  rejectComments
+} from "../../service/api/youtube-api.js";
 
 const selectedRadio = ref("video");
 const videoID = ref("");
@@ -98,27 +98,13 @@ const runCleaner = async () => {
   }
 };
 
-const addToHistory = async ({ title, id, totalSpam, thumbnail, isChannel }) => {
+const addToHistoryHandler = async ({ title, id, totalSpam, thumbnail, isChannel }) => {
   if (totalSpam > 0) {
-    const db = await dbPromise;
-    const tx = db.transaction("history", "readwrite");
-    const store = tx.objectStore("history");
-
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Januari = 0
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-
-    const createdAt = `${year}-${month}-${day} ${hours}:${minutes}`;
-    const url = isChannel ? `https://www.youtube.com/channel/${id}` : `https://www.youtube.com/watch?v=${id}`;
-
-    await store.add({ title, url, totalSpam, thumbnail, createdAt });
+    await addHistory({ title, id, totalSpam, thumbnail, isChannel });
   }
 };
 
-const handleDelete = async () => {
+const deleteHandler = async () => {
   if (idsToDelete.value.length === 0) return;
 
   await logToTerminal("\n🔨 Memulai proses penghapusan komentar...");
@@ -128,7 +114,7 @@ const handleDelete = async () => {
   await logToTerminal(`\n✅ Proses selesai. ${idsToDelete.value.length} komentar dihapus.`);
 
   dataForHistory.value.totalSpam = idsToDelete.value.length;
-  await addToHistory(dataForHistory.value);
+  await addToHistoryHandler(dataForHistory.value);
 
   canDelete.value = false;
   idsToDelete.value = [];
@@ -172,7 +158,7 @@ const handleDelete = async () => {
           <pre>{{ terminalOutput }}</pre>
         </div>
         <div v-if="showTerminal" class="mt-2 d-flex justify-content-end">
-          <button class="btn btn-sm btn-danger" @click="handleDelete" :disabled="!canDelete">
+          <button class="btn btn-sm btn-danger" @click="deleteHandler" :disabled="!canDelete">
             Bersihkan
           </button>
         </div>

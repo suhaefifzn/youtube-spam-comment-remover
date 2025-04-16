@@ -1,20 +1,20 @@
 <script setup>
-import { ref } from 'vue';
-import TokenGenerator from './TokenGenerator.vue';
+import { ref } from "vue";
+import TokenGenerator from "./TokenGenerator.vue";
 
-const status = ref('none'); // none, loading, ready, error
-const fileName = ref('');
+const status = ref("none"); // none, loading, ready, error
+const fileName = ref("");
 const fileContent = ref(null);
 
-if (localStorage.getItem('credentials.json')) {
-  status.value = 'ready';
+if (localStorage.getItem("credentials.json")) {
+  status.value = "ready";
 }
 
 const handleFileUpload = async (event) => {
   const file = event.target.files[0];
   if (!file) return;
 
-  status.value = 'loading';
+  status.value = "loading";
 
   try {
     const reader = new FileReader();
@@ -27,29 +27,29 @@ const handleFileUpload = async (event) => {
           || result.installed.redirect_uris === undefined
           || result.installed.client_secret === undefined
         ) {
-          status.value = 'error';
+          status.value = "error";
         } else {
           fileContent.value = result;
           fileName.value = file.name;
-          status.value = 'ready';
-          localStorage.setItem('credentials.json', JSON.stringify(result));
+          status.value = "ready";
+          localStorage.setItem("credentials.json", JSON.stringify(result));
         }
       } catch (err) {
-        console.error('Invalid JSON format:', err);
-        status.value = 'error';
+        console.error("Invalid JSON format:", err);
+        status.value = "error";
       }
     };
     reader.readAsText(file);
   } catch (err) {
-    console.error('File reading failed:', err);
-    status.value = 'error';
+    console.error("File reading failed:", err);
+    status.value = "error";
   }
 }
 
 // Cek apakah credentials sudah tersimpan di localStorage
-if (localStorage.getItem('credentials.json')) {
-  status.value = 'ready';
-  fileName.value = 'credentials.json (tersimpan)';
+if (localStorage.getItem("credentials.json")) {
+  status.value = "ready";
+  fileName.value = "credentials.json (tersimpan)";
 }
 </script>
 

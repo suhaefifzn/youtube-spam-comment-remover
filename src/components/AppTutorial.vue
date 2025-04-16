@@ -1,5 +1,5 @@
 <script setup>
-import CredentialUploader from './partials/CredentialUploader.vue';
+import CredentialUploader from "./partials/CredentialUploader.vue";
 </script>
 
 <template>

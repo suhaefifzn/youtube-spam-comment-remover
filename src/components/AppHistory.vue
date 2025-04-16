@@ -1,19 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { dbPromise } from "../lib/db.js";
+import { getHistory } from "../service/idb/history-idb.js";
 
 const historyList = ref([]);
 
-const loadHistory = async () => {
-    const db = await dbPromise;
-    const tx = db.transaction("history", "readonly");
-    const store = tx.objectStore("history");
-    const allHistory = await store.getAll();
-    historyList.value = allHistory.sort((a, b) => b.id - a.id); // descending
-};
-
-onMounted(() => {
-    loadHistory();
+onMounted(async () => {
+    historyList.value = await getHistory();
 });
 </script>
 

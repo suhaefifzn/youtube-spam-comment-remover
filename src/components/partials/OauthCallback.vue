@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
-const authCode = ref('');
+const authCode = ref("");
 const copySuccess = ref(false);
 
 onMounted(() => {
   const params = new URLSearchParams(window.location.search);
-  const code = params.get('code');
+  const code = params.get("code");
 
   if (code) {
     authCode.value = code;
@@ -19,7 +19,7 @@ const copyToClipboard = async () => {
     copySuccess.value = true;
     setTimeout(() => (copySuccess.value = false), 2000);
   } catch (err) {
-    alert('Gagal menyalin ke clipboard.');
+    alert("Gagal menyalin ke clipboard.");
     console.error(err)
   }
 };

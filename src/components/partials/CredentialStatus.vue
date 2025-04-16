@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { isAccessTokenExpired } from "../../service/api.js";
+import { isAccessTokenExpired } from "../../service/api/auth-api.js";
 
 const isTokenExpired = ref(false);
 isTokenExpired.value = isAccessTokenExpired();

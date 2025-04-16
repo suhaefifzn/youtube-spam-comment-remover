@@ -2,14 +2,15 @@
 Aplikasi ini digunakan untuk menghapus spam komentar pada YouTube berdasarkan kata kunci tertentu dan kata yang memiliki karakter khusus. 
 
 > [!NOTE]
-> *Konsep Dasar: <a href="https://github.com/MBenedictt/JudolSlayerProject" target="_blank" rel="noopener">https://github.com/MBenedictt/JudolSlayerProject</a>*
+> ***Demo Aplikasi:** [https://youtu.be/2JNPTJmFT8Y?si=1hYdJ1nEgJjxigiG](https://www.youtube.com/watch?v=2JNPTJmFT8Y)*<br>
+> ***Konsep Dasar:** <a href="https://github.com/MBenedictt/JudolSlayerProject" target="_blank" rel="noopener">https://github.com/MBenedictt/JudolSlayerProject</a>*
 
 ![YouTube Spam Comment Remover - Homepage](./images/1.png)
 
 ## Langkah-langkah Penggunaan
 **Langkah 1 (Wajib): Pastikan Sudah Terpasang Node.js**
 - Unduh Node.js versi LTS di halaman resminya: <a href="https://nodejs.org/" rel="noopener" target="_blank">https://nodejs.org/</a> dan install.
-- Untuk memastikan Node.js telah terpasang, bukan Command Prompt (CMD) atau terminal dan jalankan:
+- Untuk memastikan Node.js telah terpasang, buka Command Prompt (CMD) atau terminal dan jalankan:
 -  >```node -v``` dan ```npm -v```
 
 <br/>**Langkah 2 (Opsional): Install Text Editor seperti Visual Studio Code jika ingin merubah kode yang ada pada project.**
@@ -66,7 +67,7 @@ Aplikasi ini digunakan untuk menghapus spam komentar pada YouTube berdasarkan ka
 Untuk versi sekarang, sangat direkomendasikan untuk dijalankan pada perangkat masing-masing atau localhost, hal ini juga menjawab kenapa memerlukan file credentials.json yang diperoleh dari Google Cloud Platform. Jika sudah dihosting, mungkin hanya pihak yang menghostingnya saja yang memerlukan file credentials.json dan user cukup login menggunakan akun Google mereka sendiri tanpa perlu memperoleh file credentials. Tapi, menghosting aplikasi ini perlu peninjauan lebih lanjut khususnya terhadap celah keamanan dan kemampuan servernya dalam menerima request. Itu sebabnya aplikasi ini lebih baik dijalankan di localhost. 
 
 ### *Bagaimana aplikasi ini menyimpan file credentials user?*
-Konsep dari aplikasi ini adalah sepenuhnya berjalan di sisi client, yang artinya semua disimpan di penyimpanan local browser yang Anda gunakan. Seperti manajemen keywords dan history, keduanya dikelola menggunakan teknologi IndexedDB (database pada browser modern seperti Chrome atau Firefox seharusnya sudah mendukung). Sedangkan file credentials.json dan token disimpan pada local storage browser. Jika Anda penasaran, silahkan bukan Developer Tools -> Storage / Application di browser Anda untuk melihat data yang disimpan. Ini artinya, saat Anda berpindah ke browser baru untuk membuka aplikasi ini, maka semua data di browser lama tidak akan terbawa. Karena semua berjalan di sisi client terlebih lagi di localhost, maka keamanan data adalah tanggung jawab masing-masing. Saat Anda menghapus data pada browser lama, maka semua data yang tersimpan juga akan hilang. 
+Konsep dari aplikasi ini adalah sepenuhnya berjalan di sisi client, yang artinya semua disimpan di penyimpanan local browser yang Anda gunakan. Seperti manajemen keywords dan history, keduanya dikelola menggunakan teknologi IndexedDB (database pada browser modern seperti Chrome atau Firefox seharusnya sudah mendukung). Sedangkan file credentials.json dan token disimpan pada local storage browser. Jika Anda penasaran, silahkan buka Developer Tools -> Storage / Application di browser Anda untuk melihat data yang disimpan. Ini artinya, saat Anda berpindah ke browser baru untuk membuka aplikasi ini, maka semua data di browser lama tidak akan terbawa. Karena semua berjalan di sisi client terlebih lagi di localhost, maka keamanan data adalah tanggung jawab masing-masing. Saat Anda menghapus data pada browser lama, maka semua data yang tersimpan juga akan hilang. 
 
 ### *Apakah aplikasi ini gratis?*
 Aplikasi ini dibuat dengan tujuan untuk memudahkan menghapus spam komentar pada YouTube. Di sisi lain, pengembang dari aplikasi ini juga masih dalam tahap belajar. Oleh karena itu, aplikasi ini gratis dan open source.

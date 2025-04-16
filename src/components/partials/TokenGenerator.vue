@@ -1,16 +1,16 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { generateNewToken, getAuthUrl, refreshAccessToken } from '../../service/api.js';
+import { ref, computed, onMounted } from "vue";
+import { generateNewToken, getAuthUrl, refreshAccessToken } from "../../service/api/auth-api.js";
 
-const authCode = ref('');
-const authUrl = ref('');
+const authCode = ref("");
+const authUrl = ref("");
 const tokenData = ref(null);
 const now = () => Math.floor(Date.now() / 1000);
 
 onMounted(() => {
   authUrl.value = getAuthUrl();
 
-  const raw = localStorage.getItem('token.json');
+  const raw = localStorage.getItem("token.json");
   if (raw) {
     tokenData.value = JSON.parse(raw);
   }
@@ -28,10 +28,10 @@ const generateToken = async () => {
   try {
     const result = await generateNewToken(authCode.value);
     tokenData.value = result;
-    alert('Token berhasil disimpan.');
-    authCode.value = '';
+    alert("Token berhasil disimpan.");
+    authCode.value = "";
   } catch (err) {
-    alert('Gagal menyimpan token. Periksa kembali kode autentikasi.');
+    alert("Gagal menyimpan token. Periksa kembali kode autentikasi.");
     console.error(err);
   }
 };
@@ -39,26 +39,25 @@ const generateToken = async () => {
 const refreshToken = async () => {
   const result = await refreshAccessToken();
   tokenData.value = result;
-  alert('Akses token diperbarui!');
+  alert("Akses token diperbarui!");
 };
 
 const tokenExpiredAt = computed(() => {
   if (!tokenData.value) return null;
   const { created_at, expires_in } = tokenData.value;
   const expiredTimestamp = (created_at + expires_in) * 1000;
-  return new Date(expiredTimestamp).toLocaleString('id-ID', {
-    timeZone: 'Asia/Jakarta',
+  return new Date(expiredTimestamp).toLocaleString("id-ID", {
+    timeZone: "Asia/Jakarta",
     hour12: false,
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
   });
 });
-
 
 const openPopupAuthorize = () => {
   const url = getAuthUrl();
@@ -69,7 +68,7 @@ const openPopupAuthorize = () => {
 
   window.open(
     url,
-    '_blank',
+    "_blank",
     `width=${width},height=${height},top=${top},left=${left}`
   );
 };
